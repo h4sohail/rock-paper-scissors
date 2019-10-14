@@ -22,7 +22,7 @@ class Game():
 class Player(Game):
     choice = None 
  
-    def __init__(self):
+    def __init__(self): # constructor that sets the name to 'Human'
         self.name = 'Human'
 
     def set_choice(self): # get the choice from the human player
@@ -35,7 +35,7 @@ class Player(Game):
 # AiPlayer class, inherits from Player class
 class AiPlayer(Player):
     def __init__(self):
-        self.name = 'AI'
+        self.name = 'AI' # constructor that sets the name to 'Human'
     
     def set_choice(self): # set the choice for AI and return it
         self.choice = self.options[random.randint(0,2)]
@@ -47,11 +47,11 @@ def main():
     human = Player() # initialize the Player object
     ai = AiPlayer() # initialize the AiPlayer object
 
-    while(game.get_state() == True): 
+    while(game.get_state() == True): # keep looping if the game state is True
         game.sessions += 1 # track game sessions
         human.set_choice() # set human choice
         
-        if human.get_choice() not in game.options: # check the input and break the loop if it is not what we want
+        if human.get_choice() not in game.options: # check the input and break the loop if the input is not what we want
             print('Error 1: Incorrect input')
             break
 
@@ -60,6 +60,7 @@ def main():
         print(f'{human.name} selected: {human.get_choice()}') 
         print(f'{ai.name} selected: {ai.get_choice()}')
 
+        # compare the choices and display the winner
         print('------------------------')
         if ai.get_choice() == human.get_choice():
             print('[Draw]')
