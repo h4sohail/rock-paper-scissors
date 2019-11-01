@@ -48,12 +48,11 @@ def main():
     ai = AiPlayer() # initialize the AiPlayer object
 
     while(game.get_state() == True): # keep looping if the game state is True
-        game.sessions += 1 # track game sessions
         human.set_choice() # set human choice
         
         if human.get_choice() not in game.options: # check the input and break the loop if the input is not what we want
             print('Error 1: Incorrect input')
-            break
+            continue
 
         ai.set_choice() # set the ai choice
 
@@ -78,15 +77,20 @@ def main():
             print(f'[{human.name} won]')
         print('------------------------')
         
+        game.sessions += 1 # track game sessions
+
         print(f'Total sessions ran: {game.get_sessions()}') # display total sessions ran
         
-        exit_condition = input('Would you like to continue? y/n: ') # get the exit condition
-        
-        if exit_condition not in ['y', 'n']: # check the input and break the loop if it is not what we want
-            print('Error 2: Incorrect input')
-            break
+        while(True):
+            exit_condition = input('Would you like to continue? y/n: ')  # get the exit condition
 
-        elif exit_condition == 'n':
+            if exit_condition not in ['y', 'n']:  # check the input and break the loop if it is not what we want
+                print('Error 2: Incorrect input')
+                continue
+            else:
+                break
+
+        if exit_condition == 'n':
             game.close() # close the game
 
         else:
