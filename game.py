@@ -34,8 +34,8 @@ class Player(Game):
 
 # AiPlayer class, inherits from Player class
 class AiPlayer(Player):
-    def __init__(self):
-        self.name = 'AI' # constructor that sets the name to 'Human'
+    def __init__(self): # constructor that sets the name to 'AI'
+        self.name = 'AI'
     
     def set_choice(self): # set the choice for AI and return it
         self.choice = self.options[random.randint(0,2)]
