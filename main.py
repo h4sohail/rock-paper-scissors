@@ -2,6 +2,7 @@ from modules.game import Game
 from modules.actors import Player, AiPlayer
 from modules.draw import DrawData
 
+
 # main function
 def main():
     game = Game()  # initialize the Game object
@@ -25,8 +26,10 @@ def main():
         if human.choice not in game.options:  # check the input and break the loop if the input is not what we want
             print('Error 1: Incorrect input')
             continue
-        
-        elif human.choice == 'exit':
+
+        human.history.append(human.choice)
+
+        if human.choice == 'exit':
             game.close()
             continue
 

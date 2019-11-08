@@ -1,9 +1,11 @@
 import random
 from .game import Game
 
+
 # Player class, inherits from Game class
 class Player(Game):
     choice = None
+    history = []
 
     def __init__(self):  # constructor to initialize Player
         self.name = 'Human' # set the name
