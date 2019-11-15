@@ -1,7 +1,7 @@
 from modules.game import Game # /modules/game.py
 from modules.actors import Player, AiPlayer # /modules/actors.py
 from modules.draw import DrawData # /modules/draw.py
-import random
+
 
 # main function
 def main():
@@ -40,45 +40,24 @@ def main():
         if game.sessions == 1: # if it's the first round
             ai.set_choice()  # set the ai choice (randomly)
         
-        # else:
-        #     if game.sessions % 5 == 0: # every 5 rounds
-        #         if human.get_last_choice() == 'rock': # set the ai choice to the last player choice
-        #             ai.choice = 'paper'
-        #         elif human.get_last_choice() == 'paper':
-        #             ai.choice = 'scissors'
-        #         elif human.get_last_choice() == 'scissors':
-        #             ai.choice = 'rock'
+        else:
+            if game.sessions % 5 == 0: # every 5 rounds
+                if human.get_last_choice() == 'rock': # set the ai choice to the last player choice
+                    ai.choice = 'paper'
+                elif human.get_last_choice() == 'paper':
+                    ai.choice = 'scissors'
+                elif human.get_last_choice() == 'scissors':
+                    ai.choice = 'rock'
 
-        #         human.history = [] # wipe the player player history to get fresh data for next 5 rounds
+                human.history = [] # wipe the player player history to get fresh data for next 5 rounds
 
-        #     else:
-        #         if human.frequent_choice() == 'rock': # set the ai choice to the most frequent player choice
-        #             ai.choice = 'paper'
-        #         elif human.frequent_choice() == 'paper': 
-        #             ai.choice = 'scissors'
-        #         elif human.frequent_choice() == 'scissors':
-        #             ai.choice = 'rock'
-
-        else: #win-stay-lose-shift
-            if game.wins[-1] == "human": #play counter of previous human winning move
-                print(human.get_last_choice(),"%")
-                if human.get_last_choice == "paper":
-                    ai.choice = "scissors"
-                elif human.get_last_choice == "scissors":
-                    ai.choice = "rock"
-                else:
-                    ai.choice = "paper"
-            else: #human loses, change. Play counter of the other possible hands
-                moves = ["rock","paper","scissors"]
-                moves.remove(human.get_last_choice())
-                possible_next_move = moves[random.randint(0,1)] #random 
-                if possible_next_move == "rock":
-                    ai.choice = "paper"
-                elif possible_next_move == "paper":
-                    ai.choice = "scissors"
-                else:
-                    ai.choice = "rock"
-
+            else:
+                if human.frequent_choice() == 'rock': # set the ai choice to the most frequent player choice
+                    ai.choice = 'paper'
+                elif human.frequent_choice() == 'paper': 
+                    ai.choice = 'scissors'
+                elif human.frequent_choice() == 'scissors':
+                    ai.choice = 'rock'
 
         print('------------------------')
 
@@ -92,25 +71,18 @@ def main():
         elif ai.choice == 'rock' and human.choice == 'scissors':
             print(f'[{ai.name} won]')
             ai.wins += 1 # increment ai win by 1
-            game.wins.append("AI")
 
         elif ai.choice == 'paper' and human.choice == 'rock':
             print(f'[{ai.name} won]')
             ai.wins += 1 # increment ai win by 1
-            game.wins.append("AI")
-
 
         elif ai.choice == 'scissors' and human.choice == 'paper':
             print(f'[{ai.name} won]')
             ai.wins += 1 # increment ai win by 1
-            game.wins.append("AI")
-
 
         else:
             print(f'[{human.name} won]')
             human.wins += 1 # increment player win by 1
-            game.wins.append("human")
-
 
         print('------------------------')
 
