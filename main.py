@@ -1,7 +1,7 @@
 from modules.game import Game # /modules/game.py
 from modules.actors import Player, AiPlayer # /modules/actors.py
 from modules.draw import DrawData # /modules/draw.py
-import random
+
 
 
 # main function
@@ -109,36 +109,6 @@ def main():
         if game.sessions == 1: # if it's the first round
             ai.set_choice()  # set the ai choice (randomly)
         
-        # else:
-        #     if game.sessions % 5 == 0: # every 5 rounds
-        #         if human.get_last_choice() == 'rock': # set the ai choice to the last player choice
-        #             ai.choice = 'paper'
-        #         elif human.get_last_choice() == 'paper':
-        #             ai.choice = 'scissors'
-        #         elif human.get_last_choice() == 'scissors':
-        #             ai.choice = 'rock'
-
-        #         human.history = [] # wipe the player player history to get fresh data for next 5 rounds
-
-        #     else:
-        #         if human.frequent_choice() == 'rock': # set the ai choice to the most frequent player choice
-        #             ai.choice = 'paper'
-        #         elif human.frequent_choice() == 'paper': 
-        #             ai.choice = 'scissors'
-        #         elif human.frequent_choice() == 'scissors':
-        #             ai.choice = 'rock'
-        
-        
-        # else: #win-stay-lose-shift AI
-        #     win_stay_lose_shift()
-        else: #matrix frequency AI
-            if game.sessions >= 3:
-                matrixFreq()
-            else:
-                ai.set_choice()
-          
-        ai.history.append(ai.choice) 
-
         print('------------------------')
 
         print(f'{human.name} selected: {human.choice}') # display the player choice
@@ -151,25 +121,18 @@ def main():
         elif ai.choice == 'rock' and human.choice == 'scissors':
             print(f'[{ai.name} won]')
             ai.wins += 1 # increment ai win by 1
-            game.wins.append("AI")
 
         elif ai.choice == 'paper' and human.choice == 'rock':
             print(f'[{ai.name} won]')
             ai.wins += 1 # increment ai win by 1
-            game.wins.append("AI")
-
 
         elif ai.choice == 'scissors' and human.choice == 'paper':
             print(f'[{ai.name} won]')
             ai.wins += 1 # increment ai win by 1
-            game.wins.append("AI")
-
 
         else:
             print(f'[{human.name} won]')
             human.wins += 1 # increment player win by 1
-            game.wins.append("human")
-
 
         print('------------------------')
 

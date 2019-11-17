@@ -61,11 +61,6 @@ class Player(Game):
         freq_choice = collections.Counter(self.history).most_common()[0][0]
         return freq_choice
 
-    def last_winner(self):
-        #get winner of last match
-        return self.wins[-1]
-
-
 
 # AiPlayer class, inherits from Player class
 class AiPlayer(Player):
@@ -75,10 +70,6 @@ class AiPlayer(Player):
         self.wins = 0 # total wins
         self.history = []
 
-    def win_stay_lose_shift(self):
-        #player changes if they lose, and stay if they win. AI plays counter
-        AI_lastMove = get_last_choice("AI")
-        Human_lastMove = get_last_choice("Human")
     def set_choice(self):  # set the choice for AI
         '''
         Gets a random choice for the AI and assigns it to the 'choice' attribute
