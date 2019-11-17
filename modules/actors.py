@@ -5,12 +5,12 @@ from .game import Game
 # Player class, inherits from Game class
 class Player(Game):
     choice = None
-    history = []
 
     def __init__(self):  # constructor to initialize Player
         self.name = 'Human' # set the name
         self.win_rate = [] # win rate of all the sessions
         self.wins = 0 # total wins
+        self.history = []
 
     def set_choice(self):  # get the choice from the human player
         '''
@@ -38,6 +38,9 @@ class Player(Game):
         last_choice = self.history[-1]
         return last_choice
 
+    def get_second_last_choice(self):
+        second_last_choice = self.history[-2]
+        return second_last_choice
     def get_all_choices(self):
         '''
         Gets all of the players choices
@@ -65,6 +68,7 @@ class AiPlayer(Player):
         self.name = 'AI'  # set the name
         self.win_rate = [] # win rate of all sessions
         self.wins = 0 # total wins
+        self.history = []
 
     def set_choice(self):  # set the choice for AI
         '''

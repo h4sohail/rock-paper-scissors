@@ -3,6 +3,7 @@ from modules.actors import Player, AiPlayer # /modules/actors.py
 from modules.draw import DrawData # /modules/draw.py
 
 
+
 # main function
 def main():
     game = Game()  # initialize the Game object
@@ -36,29 +37,78 @@ def main():
             continue
         
         game.sessions += 1  # track game sessions
+        def matrixFreq():
+            rFreq = [[0,0,0],[0,0,0],[0,0,0]]
+            pFreq = [[0,0,0],[0,0,0],[0,0,0]]
+            sFreq = [[0,0,0],[0,0,0],[0,0,0]]
+
+            def convertToIndex(move):
+                for i in range(len(move)):
+                    if move[i] == "rock":
+                        move[i] = 0
+                    elif move[i] == "paper":
+                        move[i] = 1
+                    else:
+                        move[i] = 2
+                return move
+            last2Move = [ai.get_second_last_choice(), human.get_second_last_choice()]
+            # print(ai.get_last_choice(),human.get_last_choice())
+            last2Move = convertToIndex(last2Move)
+
+            if human.get_last_choice() == "rock":
+                #ai is row, human is col
+                # print(last2Move)
+                rFreq[last2Move[0]][last2Move[1]] += 1
+            if human.get_last_choice() == "paper":
+                pFreq[last2Move[0]][last2Move[1]] += 1
+
+            if human.get_last_choice() == "scissors":
+                sFreq[last2Move[0]][last2Move[1]] += 1
+
+            #compare freq
+            predict = [ai.get_last_choice(),human.get_last_choice()]
+            predict = convertToIndex(predict)
+
+            large = [rFreq[predict[0]][predict[1]], pFreq[predict[0]][predict[1]],sFreq[predict[0]][predict[1]]]
+
+            if max(large) == 0:
+                ai.set_choice() #random move if no pattern
+            else:
+                prefer_next_move = large.index(max(large))
+                if prefer_next_move == 0: 
+                    ai.choice = "paper" #play counter
+                elif prefer_next_move == 1:
+                    ai.choice = "scissors"
+                else:
+                    ai.choice = "rock"
+
+        def win_stay_lose_shift():
+            if len(game.wins) > 0:
+                if game.wins[-1] == "human": #play counter of previous human winning move
+                    print(human.get_last_choice(),"%")
+                    if human.get_last_choice == "paper":
+                        ai.choice = "scissors"
+                    elif human.get_last_choice == "scissors":
+                        ai.choice = "rock"
+                    else:
+                        ai.choice = "paper"
+                else: #human loses, change. Play counter of the other possible hands
+                    moves = ["rock","paper","scissors"]
+                    moves.remove(human.get_last_choice())
+                    possible_next_move = moves[random.randint(0,1)] #random 
+                    if possible_next_move == "rock":
+                        ai.choice = "paper"
+                    elif possible_next_move == "paper":
+                        ai.choice = "scissors"
+                    else:
+                        ai.choice = "rock"
+            else:
+                ai.set_choice()
+        
 
         if game.sessions == 1: # if it's the first round
             ai.set_choice()  # set the ai choice (randomly)
         
-        else:
-            if game.sessions % 5 == 0: # every 5 rounds
-                if human.get_last_choice() == 'rock': # set the ai choice to the last player choice
-                    ai.choice = 'paper'
-                elif human.get_last_choice() == 'paper':
-                    ai.choice = 'scissors'
-                elif human.get_last_choice() == 'scissors':
-                    ai.choice = 'rock'
-
-                human.history = [] # wipe the player player history to get fresh data for next 5 rounds
-
-            else:
-                if human.frequent_choice() == 'rock': # set the ai choice to the most frequent player choice
-                    ai.choice = 'paper'
-                elif human.frequent_choice() == 'paper': 
-                    ai.choice = 'scissors'
-                elif human.frequent_choice() == 'scissors':
-                    ai.choice = 'rock'
-
         print('------------------------')
 
         print(f'{human.name} selected: {human.choice}') # display the player choice
